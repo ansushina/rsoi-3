@@ -17,7 +17,7 @@ export class PaymentService {
         });
     }
 
-    private path = 'http://localhost:3001'//process.env.PAYMENT_URL;
+    private path = process.env.PAYMENT_URL;
 
     public getPayment(username:string, paymentId: string) {
         const url = this.path + `/payment/${paymentId}`;

@@ -18,7 +18,7 @@ export class LoyaltyService {
         });
     }
 
-    private path = 'http://localhost:3200';
+    private path = process.env.LOYALTY_URL;
 
     public getLoyalty(username): Observable<Loyalty> {
         // Logger.log(this.path)

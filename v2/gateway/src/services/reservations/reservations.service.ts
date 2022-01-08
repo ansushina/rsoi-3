@@ -19,7 +19,7 @@ export class ReservationsService {
         });
     }
 
-    private path = 'http://localhost:3000'//process.env.RESERVATION_URL;
+    private path = process.env.RESERVATION_URL;
 
     public getHotels(page, pageSize): Observable<Hotel[]> {
         const url = this.path + '/hotels';
