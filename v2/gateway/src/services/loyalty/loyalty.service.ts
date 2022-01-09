@@ -3,6 +3,9 @@ import { Observable, map, catchError, of } from 'rxjs';
 import { Hotel } from 'src/models/hotel';
 import { HttpService } from '@nestjs/axios';
 import { Loyalty } from 'src/models/loyalty';
+import { CircuitBreaker } from 'src/circuit-bracker';
+import { from } from 'rxjs';
+import { tap } from 'rxjs';
 const path = require('path');
 
 @Injectable()
@@ -20,16 +23,24 @@ export class LoyaltyService {
 
     private path = process.env.LOYALTY_URL;
 
+
+    private getLoyaltyBrecker = new CircuitBreaker(([url, username]) => this.http.get<Loyalty>(url, {headers: {
+        'X-User-Name': username,
+    }}).pipe(
+        map(res => res.data)
+    ).toPromise()
+    )
+
+    
     public getLoyalty(username): Observable<Loyalty> {
         // Logger.log(this.path)
         const url = this.path + '/loyalty';
 
-        return this.http.get<Loyalty>(url, {headers: {
-            'X-User-Name': username,
-        }}).pipe(
-            map(res => res.data),
+        return from(this.getLoyaltyBrecker.fire(url, username)).pipe(
+            tap(el => Logger.log(el)),
+            map(el => el instanceof Error ? null: el),
             catchError(e => of(null))
-        );
+        )
     } 
 
     public createLoyalty(username) {

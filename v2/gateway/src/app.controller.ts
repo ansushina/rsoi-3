@@ -11,6 +11,9 @@ import { PaymentService } from './services/payment/payment.service';
 import { Payment } from './models/payment';
 import { Loyalty } from './models/loyalty';
 import { Reservation } from './models/reservation';
+import { InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
+import { defaultThrottleConfig } from 'rxjs/internal/operators/throttle';
 
 @Controller('api/v1')
 export class AppController {
@@ -19,6 +22,7 @@ export class AppController {
     private readonly reservation: ReservationsService,
     private readonly loyalty: LoyaltyService,
     private readonly payment: PaymentService,
+    @InjectQueue('queue1') private queue: Queue
   ) { }
 
   @Get()
@@ -251,10 +255,21 @@ export class AppController {
       throw new ServiceUnavailableException('Reservation Service unavailable')
     }
 
-    // loylty - 1 
+    //loylty - 1 
 
-    const l = await this.loyalty.updateLoyaltyCount(username, 'dec').toPromise();
-
+    Logger.log('try to add job')
+    const job = await this.queue.add('job1',
+    {
+      try: 1, 
+      creationTime: Date.now(),
+      request: 'updateLoyalty', 
+      requestData: {
+        username, 
+        type: 'dec',
+      }
+    });
+    // const l = await this.loyalty.updateLoyaltyCount(username, 'dec').toPromise();
+    // Logger.log(JSON.stringify(l))
   }
 
   @Get('loyalty')
@@ -268,7 +283,7 @@ export class AppController {
     if (l === null) {
       throw new ServiceUnavailableException('Loyalty Service unavailable');
     }
-    // Logger.log(l)
+    Logger.log(l)
     return {
       ...l,
       username: undefined,

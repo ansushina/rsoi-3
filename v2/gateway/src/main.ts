@@ -1,3 +1,4 @@
+import { BullModule } from '@nestjs/bull';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
