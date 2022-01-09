@@ -252,13 +252,13 @@ export class AppController {
     const p = await this.payment.changePaymentState(username, r.paymentUid, 'CANCELED').toPromise();
 
     if (!p) {
-      throw new ServiceUnavailableException('Reservation Service unavailable')
+      throw new ServiceUnavailableException('Payment Service unavailable')
     }
 
     //loylty - 1 
 
     Logger.log('try to add job')
-    const job = await this.queue.add('job1',
+    this.queue.add('job1',
     {
       try: 1, 
       creationTime: Date.now(),

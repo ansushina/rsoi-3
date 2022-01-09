@@ -35,7 +35,7 @@ export class MessageConsumer {
         const res = await this.loyalty.updateLoyaltyCount(job.data.requestData.username, job.data.requestData.type).toPromise();
         Logger.log( JSON.stringify(res), 'res')
         if (!res) {
-            await this.queue.add('job1',
+            this.queue.add('job1',
             {
               try: job.data.try + 1, 
               creationTime: job.data.creationTime,
