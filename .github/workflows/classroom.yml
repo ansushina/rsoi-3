@@ -25,11 +25,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       
-      - name: build reservation
-        run: |
-          cd v2/reservation
-          npm ci
-          npm run build
+      # - name: build reservation
+      #   run: |
+      #     cd v2/reservation
+      #     npm ci
+      #     npm run build
 
       - name: deploy RESERVATION
         uses: akhileshns/heroku-deploy@v3.4.6
@@ -40,11 +40,11 @@ jobs:
           usedocker: true
           appdir: v2/reservation
           
-      - name: build loyalty
-        run: |
-          cd v2/loyalty
-          npm ci
-          npm run build
+      # - name: build loyalty
+      #   run: |
+      #     cd v2/loyalty
+      #     npm ci
+      #     npm run build
 
       - name: deploy LOYALTY
         uses: akhileshns/heroku-deploy@v3.4.6
@@ -55,11 +55,11 @@ jobs:
           usedocker: true
           appdir: v2/loyalty
 
-      - name: build payment
-        run: |
-          cd v2/payment
-          npm ci
-          npm run build
+      # - name: build payment
+      #   run: |
+      #     cd v2/payment
+      #     npm ci
+      #     npm run build
 
       - name: deploy PAYMENT
         uses: akhileshns/heroku-deploy@v3.4.6
@@ -71,11 +71,11 @@ jobs:
           appdir: v2/payment
 
 
-      - name: build gateway
-        run: |
-          cd v2/gateway
-          npm ci
-          npm run build
+      # - name: build gateway
+      #   run: |
+      #     cd v2/gateway
+      #     npm ci
+      #     npm run build
 
       - name: deploy GATEWAY
         uses: akhileshns/heroku-deploy@v3.4.6
