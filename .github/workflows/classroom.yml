@@ -10,9 +10,9 @@ jobs:
   build:
     name: Autograding
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x]
+    # strategy:
+    #   matrix:
+    #     node-version: [12.x]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -20,10 +20,10 @@ jobs:
 
       # TODO build, test and deploy project
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
+      # - name: Use Node.js ${{ matrix.node-version }}
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: ${{ matrix.node-version }}
       
       # - name: build reservation
       #   run: |
