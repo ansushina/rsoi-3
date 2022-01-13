@@ -12,8 +12,8 @@ import { MessageConsumer } from './services/order/order.consumer';
   imports: [HttpModule, 
     BullModule.forRoot({
       redis: {
-        host: 'ec2-34-247-243-70.eu-west-1.compute.amazonaws.com',
-        port: 13510,
+        host: 'ec2-52-51-174-25.eu-west-1.compute.amazonaws.com',
+        port: 26340,
         password: 'pb75d8f8fda76b3cd89e321b57db8dda2bea6ae899d705f5db90e4f728aa4d55e',
         tls: {
           rejectUnauthorized: false
